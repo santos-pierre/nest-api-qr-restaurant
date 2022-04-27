@@ -1,73 +1,45 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+# QR Restaurant
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Platform where a restaurant owner create the menu for his restaurants. The menu is generate with a QR code for the customers. The client can now scan the code to see the menu and make a order.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Technologies
 
-## Description
+-   Back - NestJS => TypeORM/PSQL
+-   Front - NextJS => TailwindCSS/HeadlessUI
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Features V1 - Dashboard
 
-## Installation
+[Figma](https://www.figma.com/file/hcWEVuMRzAMyamRS0YhPcF/QR_payment?node-id=0%3A1)
 
-```bash
-$ npm install
-```
+-   Authentication
 
-## Running the app
+    -   User must verifiy email to access features in dashboard
+    -   User can see only his restaurants
 
-```bash
-# development
-$ npm run start
+-   Create restaurant one or more per user
 
-# watch mode
-$ npm run start:dev
+    -   Name
+    -   Street
+    -   ...
 
-# production mode
-$ npm run start:prod
-```
+-   Create dishes
 
-## Test
+    -   Name
+    -   Description
+    -   Select category => Starter, main dishes, dessert, drink, ... (Only One)
+    -   Select food intolerance => Vegan, Only Meat, ... (Many can be selected)
+    -   (PROMO)
 
-```bash
-# unit tests
-$ npm run test
+-   Generate QR Code for the menu
 
-# e2e tests
-$ npm run test:e2e
+## Features V1 - Client
 
-# test coverage
-$ npm run test:cov
-```
+-   Scan QR Code
+-   Add products to cart
+-   Write little description for some information about the order
+    [Front Design](https://www.figma.com/file/hcWEVuMRzAMyamRS0YhPcF/QR_payment?node-id=0%3A1)
+-   Stripe Test Payment (Not connect to dashboard account)
 
-## Support
+## Schema DB
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+![Demo DB](./github/img/schema_db.png)
