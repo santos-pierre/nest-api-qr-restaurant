@@ -9,7 +9,6 @@ export class CreateUserDto {
 	name: string;
 
 	@IsNotEmpty()
-	@IsString()
 	@Length(1, 255)
 	@Transform(({ value }: TransformFnParams) => value.toLowerCase())
 	@IsEmail()
