@@ -12,29 +12,29 @@ import LoginUserDto from './dto/login-user.dto';
 export class UsersService {
 	constructor(@InjectRepository(User) private userRepository: Repository<User>) {}
 
-	create = async (createUserDto: CreateUserDto): Promise<User> => {
+	async create(createUserDto: CreateUserDto): Promise<User> {
 		const hashedPassword = await argon2.hash(createUserDto.password, { type: argon2.argon2id });
 		const newUser = await this.userRepository.save({ ...createUserDto, password: hashedPassword });
 		return plainToInstance(User, newUser);
-	};
+	}
 
-	findAll = async (): Promise<[User[], number]> => {
+	async findAll(): Promise<[User[], number]> {
 		return this.userRepository.findAndCount();
-	};
+	}
 
-	findOne = async (id: string): Promise<User> => {
+	async findOne(id: string): Promise<User> {
 		return plainToInstance(User, await this.userRepository.findOneBy({ id }));
-	};
+	}
 
-	update = async (id: string, updateUserDto: UpdateUserDto): Promise<User> => {
+	async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
 		return plainToInstance(User, await this.userRepository.save({ id, ...updateUserDto }));
-	};
+	}
 
-	remove = async (id: string): Promise<DeleteResult> => {
+	async remove(id: string): Promise<DeleteResult> {
 		return await this.userRepository.delete({ id });
-	};
+	}
 
-	validateUser = async (loginDto: LoginUserDto): Promise<User> => {
+	async validateUser(loginDto: LoginUserDto): Promise<User> {
 		const user = await this.userRepository.findOneBy({ email: loginDto.email });
 
 		if (user && (await argon2.verify(user.password, loginDto.password, { type: argon2.argon2id }))) {
@@ -42,5 +42,5 @@ export class UsersService {
 		}
 
 		throw new HttpException('Credentials do not match our records', HttpStatus.UNPROCESSABLE_ENTITY);
-	};
+	}
 }
