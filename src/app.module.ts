@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { User } from './users/entities/user.entity';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { MailerModule } from './mailer/mailer.module';
 
 @Module({
 	imports: [
@@ -19,6 +20,10 @@ import { AuthModule } from './auth/auth.module';
 			database: process.env.DATABASE_NAME,
 			synchronize: true,
 			entities: [User],
+		}),
+		MailerModule.forRoot({
+			from: process.env.MAILER_FROM,
+			port: parseInt(process.env.MAILER_PORT),
 		}),
 		UsersModule,
 		AuthModule,
