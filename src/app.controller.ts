@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, HttpException, Post, Res } from '@nestjs/common';
+import { Controller, Get, HttpCode, HttpException, Post, Res } from '@nestjs/common';
 import { Response } from 'express';
 import { AppService } from './app.service';
 import { MailerService } from './mailer/mailer.service';
@@ -20,11 +20,14 @@ export class AppController {
 
 	@Post('/test-send')
 	@HttpCode(200)
-	async testSend(@Body() content) {
-		const isSent = await this.mailerService.sendMail({
-			to: content.to,
-			subject: content.subject,
-			text: content.text,
+	async testSend() {
+		const isSent = await this.mailerService.sendEmailVerification({
+			to: 'santospierre@gmail.com',
+			context: {
+				name: 'Pierre',
+				email: 'santospierre@gmail.com',
+				url: process.env.APP_URL + '/verify/token',
+			},
 		});
 
 		if (!isSent) {

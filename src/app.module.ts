@@ -6,7 +6,11 @@ import { AppService } from './app.service';
 import { User } from './users/entities/user.entity';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
-import { MailerModule } from './mailer/mailer.module';
+import { MailerModule } from '@nestjs-modules/mailer';
+import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { cwd } from 'process';
+import { MailerService } from './mailer/mailer.service';
+import * as path from 'path';
 
 @Module({
 	imports: [
@@ -22,13 +26,33 @@ import { MailerModule } from './mailer/mailer.module';
 			entities: [User],
 		}),
 		MailerModule.forRoot({
-			from: process.env.MAILER_FROM,
-			port: parseInt(process.env.MAILER_PORT),
+			transport: {
+				host: process.env.MAILER_HOST,
+				port: parseInt(process.env.MAILER_PORT),
+			},
+			defaults: {
+				from: process.env.MAILER_FROM,
+			},
+			template: {
+				dir: cwd() + '/templates',
+				adapter: new HandlebarsAdapter(),
+				options: {
+					strict: true,
+				},
+			},
+			options: {
+				partials: {
+					dir: path.join(cwd(), 'templates/partials'),
+					options: {
+						strict: true,
+					},
+				},
+			},
 		}),
 		UsersModule,
 		AuthModule,
 	],
 	controllers: [AppController],
-	providers: [AppService],
+	providers: [AppService, MailerService],
 })
 export class AppModule {}
