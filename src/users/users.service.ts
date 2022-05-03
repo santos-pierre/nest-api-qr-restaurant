@@ -19,7 +19,7 @@ export class UsersService {
 	}
 
 	async findAll(): Promise<[User[], number]> {
-		return this.userRepository.findAndCount();
+		return await this.userRepository.findAndCount();
 	}
 
 	async findOne(id: string): Promise<User> {
@@ -32,6 +32,22 @@ export class UsersService {
 
 	async remove(id: string): Promise<DeleteResult> {
 		return await this.userRepository.delete({ id });
+	}
+
+	private async findByEmailAndId(id: string, email: string): Promise<User> {
+		return plainToInstance(
+			User,
+			await this.userRepository
+				.createQueryBuilder('user')
+				.where('user.id = :id', { id })
+				.andWhere('user.email = :email', { email })
+				.getOne(),
+		);
+	}
+
+	async verifyUser(id: string, email: string): Promise<User> {
+		const user = await this.findByEmailAndId(id, email);
+		return await this.userRepository.save({ ...user, email_verified_at: new Date() });
 	}
 
 	async validateUser(loginDto: LoginUserDto): Promise<User> {
