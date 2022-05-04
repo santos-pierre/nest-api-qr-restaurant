@@ -45,9 +45,16 @@ export class UsersService {
 		);
 	}
 
-	async verifyUser(id: string, email: string): Promise<User> {
+	async verifyUser(id: string, email: string): Promise<void> {
 		const user = await this.findByEmailAndId(id, email);
-		return await this.userRepository.save({ ...user, email_verified_at: new Date() });
+
+		if (user.email_verified_at) {
+			throw new HttpException('Email already verified', HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+		await this.userRepository.save({
+			...user,
+			email_verified_at: new Date(),
+		});
 	}
 
 	async validateUser(loginDto: LoginUserDto): Promise<User> {

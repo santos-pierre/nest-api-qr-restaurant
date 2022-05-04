@@ -21,15 +21,15 @@ export class User {
 	@Exclude()
 	password: string;
 
-	@Column({ type: 'time with time zone', nullable: true })
+	@Column({ type: 'timestamptz', nullable: true })
 	email_verified_at: Date;
 
 	@Column({ type: 'enum', enum: UserRole, default: UserRole.RESTAURANT_OWNER })
 	role: UserRole;
 
-	@CreateDateColumn({ type: 'time with time zone', nullable: true })
+	@CreateDateColumn({ type: 'timestamptz', nullable: true })
 	created_at: Date;
 
-	@UpdateDateColumn({ type: 'time with time zone', nullable: true })
+	@UpdateDateColumn({ type: 'timestamptz', nullable: true })
 	updated_at: Date;
 }

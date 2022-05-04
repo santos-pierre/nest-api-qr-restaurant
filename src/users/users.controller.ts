@@ -12,6 +12,7 @@ import {
 	HttpCode,
 	HttpException,
 	HttpStatus,
+	Redirect,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -58,17 +59,19 @@ export class UsersController {
 		return { verifyEmailToken };
 	}
 
+	// TODO ADD Redirect to Front-End
 	@Get('/verify-email/:token')
 	async verifyUser(@Param('token') token: string) {
 		try {
 			const { user_id, email } = await this.jwtService.verifyAsync<EmailVerifyTokenPayolad>(token);
-			const user = await this.usersService.verifyUser(user_id, email);
-			return user;
+			await this.usersService.verifyUser(user_id, email);
 		} catch (error) {
 			if (error instanceof JsonWebTokenError) {
 				throw new HttpException(error, HttpStatus.BAD_REQUEST);
 			} else if (error instanceof TokenExpiredError) {
 				throw new HttpException(error, HttpStatus.BAD_REQUEST);
+			} else if (error instanceof HttpException) {
+				return;
 			}
 		}
 	}
