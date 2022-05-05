@@ -6,7 +6,7 @@ import { EmailVerificationOptions } from './interfaces/email-verification-option
 export class MailerService {
 	constructor(private readonly mailerService: NestMailerService) {}
 
-	async sendEmailVerification(options: EmailVerificationOptions): Promise<Boolean> {
+	async sendEmailVerification(options: EmailVerificationOptions): Promise<boolean> {
 		try {
 			await this.mailerService.sendMail({
 				to: options.to,

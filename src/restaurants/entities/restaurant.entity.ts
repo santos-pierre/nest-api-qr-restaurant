@@ -1,12 +1,22 @@
 import { User } from 'src/users/entities/user.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+	Column,
+	CreateDateColumn,
+	Entity,
+	JoinColumn,
+	ManyToOne,
+	PrimaryGeneratedColumn,
+	Unique,
+	UpdateDateColumn,
+} from 'typeorm';
 
 @Entity({ name: 'restaurants' })
+@Unique('UK_Restaurant__User', ['slug', 'user_id'])
 export class Restaurant {
 	@PrimaryGeneratedColumn('uuid')
 	id: string;
 
-	@Column({ type: 'varchar', unique: true, nullable: true })
+	@Column({ type: 'varchar', nullable: true })
 	slug: string;
 
 	@Column({ type: 'varchar', nullable: false })
@@ -25,5 +35,12 @@ export class Restaurant {
 	city_code: number;
 
 	@ManyToOne(() => User, (user) => user.id)
+	@JoinColumn({ name: 'user_id' })
 	user_id: User;
+
+	@CreateDateColumn({ type: 'timestamptz', nullable: true })
+	created_at: Date;
+
+	@UpdateDateColumn({ type: 'timestamptz', nullable: true })
+	updated_at: Date;
 }

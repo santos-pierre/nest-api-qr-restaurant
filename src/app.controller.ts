@@ -12,6 +12,7 @@ export class AppController {
 		return this.appService.getHello();
 	}
 
+	//TODO Clean Test Routes
 	@Get('/setcookie')
 	setCookie(@Res() res: Response) {
 		res.cookie('my token', 'encrypted value');

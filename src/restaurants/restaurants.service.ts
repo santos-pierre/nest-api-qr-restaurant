@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateRestaurantDto } from './dto/create-restaurant.dto';
@@ -6,6 +6,7 @@ import { UpdateRestaurantDto } from './dto/update-restaurant.dto';
 import { Restaurant } from './entities/restaurant.entity';
 import slugify from 'slugify';
 import { User } from 'src/users/entities/user.entity';
+import { plainToInstance } from 'class-transformer';
 
 @Injectable()
 export class RestaurantsService {
@@ -13,26 +14,71 @@ export class RestaurantsService {
 		@InjectRepository(Restaurant) private readonly restaurantsRepository: Repository<Restaurant>,
 	) {}
 	async create(user: User, createRestaurantDto: CreateRestaurantDto) {
-		return await this.restaurantsRepository.save({
-			...createRestaurantDto,
-			slug: slugify(createRestaurantDto.name),
-			user_id: user,
+		try {
+			const newRestaurant = await this.restaurantsRepository.save({
+				...createRestaurantDto,
+				slug: slugify(createRestaurantDto.name, { lower: true }),
+				user_id: user,
+			});
+			return newRestaurant;
+		} catch (error) {
+			if (error.code === '23505') {
+				throw new HttpException(error.detail, HttpStatus.UNPROCESSABLE_ENTITY);
+			}
+		}
+	}
+
+	async findAll(user_id: string): Promise<[Restaurant[], number]> {
+		return await this.restaurantsRepository.findAndCount({
+			where: { user_id: { id: user_id } },
+			relations: { user_id: true },
 		});
 	}
 
-	async findAll(user_id: string) {
-		// return await this.restaurantsRepository.createQueryBuilder('restaurants').leftJoin('');
+	async findOneByUser(slug: string, user_id: string) {
+		return await this.restaurantsRepository.findOne({
+			where: { slug, user_id: { id: user_id } },
+			relations: { user_id: true },
+		});
 	}
 
-	findOne(id: number) {
-		return `This action returns a #${id} restaurant`;
+	async findOne(slug: string) {
+		return await this.restaurantsRepository.findOne({
+			where: { slug },
+			relations: { user_id: true },
+		});
 	}
 
-	update(id: number, updateRestaurantDto: UpdateRestaurantDto) {
-		return `This action updates a #${id} restaurant`;
+	async update(slug: string, updateRestaurantDto: UpdateRestaurantDto) {
+		const restaurant = await this.restaurantsRepository.findOneBy({ slug });
+
+		if (!restaurant) {
+			throw new NotFoundException();
+		}
+
+		try {
+			const updatedRestaurant = await this.restaurantsRepository.save({
+				id: restaurant.id,
+				user_id: restaurant.user_id,
+				slug: slugify(updateRestaurantDto.name, { lower: true }),
+				...updateRestaurantDto,
+			});
+			return updatedRestaurant;
+		} catch (error) {
+			if (error.code === '23505') {
+				throw new HttpException(error.detail, HttpStatus.UNPROCESSABLE_ENTITY);
+			}
+		}
 	}
 
-	remove(id: number) {
-		return `This action removes a #${id} restaurant`;
+	async remove(slug: string, user_id: string) {
+		const restaurant = await this.restaurantsRepository.findOne({
+			where: { slug, user_id: { id: user_id } },
+		});
+		if (!restaurant) {
+			throw new NotFoundException();
+		}
+
+		await this.restaurantsRepository.remove(restaurant);
 	}
 }
