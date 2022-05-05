@@ -10,7 +10,9 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { cwd } from 'process';
 import { MailerService } from './mailer/mailer.service';
+import { RestaurantsModule } from './restaurants/restaurants.module';
 import * as path from 'path';
+import { Restaurant } from './restaurants/entities/restaurant.entity';
 
 @Module({
 	imports: [
@@ -23,7 +25,7 @@ import * as path from 'path';
 			password: process.env.DATABASE_PASSWORD,
 			database: process.env.DATABASE_NAME,
 			synchronize: true,
-			entities: [User],
+			entities: [User, Restaurant],
 		}),
 		MailerModule.forRoot({
 			transport: {
@@ -51,6 +53,7 @@ import * as path from 'path';
 		}),
 		UsersModule,
 		AuthModule,
+		RestaurantsModule,
 	],
 	controllers: [AppController],
 	providers: [AppService, MailerService],
