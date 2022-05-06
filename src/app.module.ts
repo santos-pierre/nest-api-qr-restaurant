@@ -13,6 +13,7 @@ import { MailerService } from './mailer/mailer.service';
 import { RestaurantsModule } from './restaurants/restaurants.module';
 import * as path from 'path';
 import { Restaurant } from './restaurants/entities/restaurant.entity';
+import { MenuCategory } from './menu-category/entities/menu-category.entity';
 
 @Module({
 	imports: [
@@ -25,7 +26,7 @@ import { Restaurant } from './restaurants/entities/restaurant.entity';
 			password: process.env.DATABASE_PASSWORD,
 			database: process.env.DATABASE_NAME,
 			synchronize: true,
-			entities: [User, Restaurant],
+			entities: [User, Restaurant, MenuCategory],
 		}),
 		MailerModule.forRoot({
 			transport: {
