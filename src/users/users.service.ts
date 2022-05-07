@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -13,9 +13,12 @@ export class UsersService {
 	constructor(@InjectRepository(User) private userRepository: Repository<User>) {}
 
 	async create(createUserDto: CreateUserDto): Promise<User> {
-		const user = this.userRepository.findBy({ email: createUserDto.email });
+		const user = await this.userRepository.findOneBy({ email: createUserDto.email });
 		if (user) {
-			throw new HttpException('Email already exist', HttpStatus.UNPROCESSABLE_ENTITY);
+			throw new UnprocessableEntityException({
+				status: HttpStatus.UNPROCESSABLE_ENTITY,
+				errors: { email: ['Email Already Taken'] },
+			});
 		}
 		const hashedPassword = await argon2.hash(createUserDto.password, { type: argon2.argon2id });
 		const newUser = await this.userRepository.save({ ...createUserDto, password: hashedPassword });

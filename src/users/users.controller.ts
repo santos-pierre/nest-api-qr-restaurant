@@ -20,13 +20,15 @@ import { JwtService } from '@nestjs/jwt';
 import { JsonWebTokenError, TokenExpiredError } from 'jsonwebtoken';
 import { CreateEmailVerifyTokenDto } from './dto/create-email-verify-token.dto';
 import { EmailVerifyTokenPayolad } from './interface/EmailVerifyTokenPayload';
+import { CustomValidationPipe } from 'src/pipes/custom-validation.pipe';
 
 @Controller('users')
 export class UsersController {
 	constructor(private readonly usersService: UsersService, private readonly jwtService: JwtService) {}
 
 	@Post()
-	@UsePipes(new ValidationPipe({ transform: true }))
+	// @UsePipes(new ValidationPipe({ transform: true }))
+	@UsePipes(new CustomValidationPipe({ transform: true }))
 	create(@Body() createUserDto: CreateUserDto) {
 		return this.usersService.create(createUserDto);
 	}
