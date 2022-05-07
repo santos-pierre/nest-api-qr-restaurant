@@ -13,6 +13,10 @@ export class UsersService {
 	constructor(@InjectRepository(User) private userRepository: Repository<User>) {}
 
 	async create(createUserDto: CreateUserDto): Promise<User> {
+		const user = this.userRepository.findBy({ email: createUserDto.email });
+		if (user) {
+			throw new HttpException('Email already exist', HttpStatus.UNPROCESSABLE_ENTITY);
+		}
 		const hashedPassword = await argon2.hash(createUserDto.password, { type: argon2.argon2id });
 		const newUser = await this.userRepository.save({ ...createUserDto, password: hashedPassword });
 		return plainToInstance(User, newUser);

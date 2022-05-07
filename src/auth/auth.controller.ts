@@ -1,5 +1,4 @@
-import { Controller, Get, HttpCode, Post, Req, Res, UseGuards } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
+import { Body, Controller, Get, HttpCode, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { Request, Response } from 'express';
 import ms from 'ms';
 import { AuthService } from './auth.service';
@@ -10,11 +9,16 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
 export class AuthController {
 	constructor(private readonly authService: AuthService) {}
 
-	@UseGuards(AuthGuard('local'))
-	@HttpCode(204)
+	// @UseGuards(AuthGuard('local'))
+	@HttpCode(200)
 	@Post('login')
-	async login(@Req() req, @Res({ passthrough: true }) res: Response) {
-		const { access_token } = await this.authService.login(req.user);
+	async login(
+		@Body('email') email: string,
+		@Body('password') password: string,
+		@Res({ passthrough: true }) res: Response,
+	) {
+		const user = await this.authService.validate({ email, password });
+		const { access_token } = await this.authService.login(user);
 		res.cookie(TOKEN_KEY, access_token, { maxAge: ms('30d') });
 	}
 
