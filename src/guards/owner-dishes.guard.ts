@@ -3,15 +3,15 @@ import { RestaurantsService } from 'src/restaurants/restaurants.service';
 import { RequestWithUser } from 'src/users/interface/RequestWithUser';
 
 @Injectable()
-export class OwnerResourceGuard implements CanActivate {
+export class OwnerDishGuard implements CanActivate {
 	constructor(private readonly restaurantsService: RestaurantsService) {}
 	async canActivate(context: ExecutionContext) {
 		const {
-			params: { slug },
+			params: { restaurant_id },
 			user,
 		} = context.switchToHttp().getRequest<RequestWithUser>();
 
-		const restaurant = await this.restaurantsService.findOneByUser(slug, user.id);
+		const restaurant = await this.restaurantsService.findOneByUser(restaurant_id, user.id);
 
 		if (!restaurant) {
 			throw new NotFoundException();

@@ -1,3 +1,4 @@
+import { Dish } from 'src/dishes/entities/dish.entity';
 import { User } from 'src/users/entities/user.entity';
 import {
 	Column,
@@ -5,6 +6,7 @@ import {
 	Entity,
 	JoinColumn,
 	ManyToOne,
+	OneToMany,
 	PrimaryGeneratedColumn,
 	Unique,
 	UpdateDateColumn,
@@ -37,6 +39,9 @@ export class Restaurant {
 	@ManyToOne(() => User, (user) => user.id)
 	@JoinColumn({ name: 'user_id' })
 	user_id: User;
+
+	@OneToMany(() => Dish, (dish) => dish.restaurant_id, { onDelete: 'CASCADE' })
+	dishes: Dish[];
 
 	@CreateDateColumn({ type: 'timestamptz', nullable: true })
 	created_at: Date;

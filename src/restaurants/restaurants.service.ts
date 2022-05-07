@@ -6,7 +6,6 @@ import { UpdateRestaurantDto } from './dto/update-restaurant.dto';
 import { Restaurant } from './entities/restaurant.entity';
 import slugify from 'slugify';
 import { User } from 'src/users/entities/user.entity';
-import { plainToInstance } from 'class-transformer';
 
 @Injectable()
 export class RestaurantsService {
@@ -36,10 +35,12 @@ export class RestaurantsService {
 	}
 
 	async findOneByUser(slug: string, user_id: string) {
-		return await this.restaurantsRepository.findOne({
-			where: { slug, user_id: { id: user_id } },
-			relations: { user_id: true },
-		});
+		return await this.restaurantsRepository
+			.createQueryBuilder('restaurants')
+			.leftJoinAndSelect('restaurants.user_id', 'users')
+			.where('restaurants.user_id = :user_id', { user_id })
+			.andWhere('restaurants.slug = :slug', { slug })
+			.getOne();
 	}
 
 	async findOne(slug: string) {
@@ -74,11 +75,12 @@ export class RestaurantsService {
 	async remove(slug: string, user_id: string) {
 		const restaurant = await this.restaurantsRepository.findOne({
 			where: { slug, user_id: { id: user_id } },
+			select: ['id'],
 		});
 		if (!restaurant) {
 			throw new NotFoundException();
 		}
 
-		await this.restaurantsRepository.remove(restaurant);
+		await this.restaurantsRepository.delete({ id: restaurant.id });
 	}
 }

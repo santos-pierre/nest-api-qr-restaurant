@@ -12,7 +12,6 @@ import {
 	UsePipes,
 	UseInterceptors,
 	ClassSerializerInterceptor,
-	ForbiddenException,
 	NotFoundException,
 	HttpCode,
 } from '@nestjs/common';
