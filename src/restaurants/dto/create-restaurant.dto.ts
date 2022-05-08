@@ -1,5 +1,5 @@
 import { Transform, TransformFnParams } from 'class-transformer';
-import { IsNotEmpty, IsNumber, IsString, Length } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString, Length, Matches } from 'class-validator';
 
 export class CreateRestaurantDto {
 	@IsNotEmpty()
@@ -25,5 +25,6 @@ export class CreateRestaurantDto {
 
 	@IsNotEmpty()
 	@IsNumber()
+	// @Matches(/^[1-9][0-9]{3}$/, { message: 'Invalid City Code' })
 	city_code: number;
 }

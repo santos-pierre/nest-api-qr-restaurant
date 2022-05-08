@@ -1,15 +1,15 @@
 {
 	"_type": "export",
 	"__export_format": 4,
-	"__export_date": "2022-05-05T20:52:45.744Z",
+	"__export_date": "2022-05-08T19:10:26.403Z",
 	"__export_source": "insomnia.desktop.app:v2022.3.0",
 	"resources": [
 		{
 			"_id": "req_658329e5647c43f1876437f5caf98ff2",
 			"parentId": "fld_5aa707229b0043cca7dd8ebe9439c61e",
-			"modified": 1651776821042,
+			"modified": 1651917214142,
 			"created": 1651775953632,
-			"url": "{{ _.URL }}/restaurants/my-second-awesome-restaurant",
+			"url": "{{ _.URL }}/restaurants/my-third-awesome-restaurant",
 			"name": "delete",
 			"description": "",
 			"method": "DELETE",
@@ -84,9 +84,9 @@
 		{
 			"_id": "req_3f03887b25e84686baf872e5a072d977",
 			"parentId": "fld_5aa707229b0043cca7dd8ebe9439c61e",
-			"modified": 1651774913974,
+			"modified": 1652026594252,
 			"created": 1651766611861,
-			"url": "{{ _.URL }}/restaurants/my-second-awesome-restaurant",
+			"url": "{{ _.URL }}/restaurants/burger-king",
 			"name": "get one",
 			"description": "",
 			"method": "GET",
@@ -130,7 +130,7 @@
 		{
 			"_id": "req_aa77392a89da4b529bdab946c302a9c7",
 			"parentId": "fld_5aa707229b0043cca7dd8ebe9439c61e",
-			"modified": 1651776472137,
+			"modified": 1652026776647,
 			"created": 1651765254487,
 			"url": "{{ _.URL }}/restaurants",
 			"name": "create",
@@ -138,7 +138,152 @@
 			"method": "POST",
 			"body": {
 				"mimeType": "application/json",
-				"text": "{\n\t\"name\": \"My Second awesome Restaurant\",\n\t\"street_name\": \"rue jules cocks\",\n\t\"street_number\": 6,\n\t\"city_name\": \"Auderghem\",\n\t\"city_code\": 1060\n}"
+				"text": "{\n\t\"name\": \"Burger King\",\n\t\"street_name\": \"rue jules cocks\",\n\t\"street_number\": 6,\n\t\"city_name\": \"Auderghem\",\n\t\"city_code\": 1060\n}"
+			},
+			"parameters": [],
+			"headers": [
+				{
+					"name": "Content-Type",
+					"value": "application/json",
+					"id": "pair_c431376bec48410190776d821899f3b9"
+				}
+			],
+			"authentication": {},
+			"metaSortKey": -1651765254487,
+			"isPrivate": false,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingRebuildPath": true,
+			"settingFollowRedirects": "global",
+			"_type": "request"
+		},
+		{
+			"_id": "req_ff617b542f564a5db71f9efdd734f5e8",
+			"parentId": "fld_e1c5c44cd3434bac843c7c7df738993e",
+			"modified": 1651921785573,
+			"created": 1651907479029,
+			"url": "{{ _.URL }}/restaurants/mc-donalds/dishes/hamburger",
+			"name": "delete",
+			"description": "",
+			"method": "DELETE",
+			"body": {},
+			"parameters": [],
+			"headers": [],
+			"authentication": {},
+			"metaSortKey": -1651775953632,
+			"isPrivate": false,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingRebuildPath": true,
+			"settingFollowRedirects": "global",
+			"_type": "request"
+		},
+		{
+			"_id": "fld_e1c5c44cd3434bac843c7c7df738993e",
+			"parentId": "wrk_72ea9c8217bc419eb2c742ca2e77d158",
+			"modified": 1651907479003,
+			"created": 1651907479003,
+			"name": "Dishes",
+			"description": "",
+			"environment": {},
+			"environmentPropertyOrder": null,
+			"metaSortKey": -1651642241818,
+			"_type": "request_group"
+		},
+		{
+			"_id": "req_763ce7ac3c394375a60d1bd66bfc9f33",
+			"parentId": "fld_e1c5c44cd3434bac843c7c7df738993e",
+			"modified": 1651916423138,
+			"created": 1651907479026,
+			"url": "{{ _.URL }}/restaurants/my-third-awesome-restaurant/dishes/this-is-a-dish-without-allergens",
+			"name": "update",
+			"description": "",
+			"method": "PATCH",
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"name\": \"This is a dish without allergens\",\n\t\"description\": \"This is a description\",\n\t\"price\": 22.55,\n\t\"menu_category_id\": \"14b23031-cbcb-4776-a25c-07c1f478e356\",\n\t\"allergens\": [\"6ee00d70-e50a-4da1-984d-4b8766f11f2f\"]\n}"
+			},
+			"parameters": [],
+			"headers": [
+				{
+					"name": "Content-Type",
+					"value": "application/json",
+					"id": "pair_500969dc4eac49f1a33098b94a71b6c3"
+				}
+			],
+			"authentication": {},
+			"metaSortKey": -1651773463976,
+			"isPrivate": false,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingRebuildPath": true,
+			"settingFollowRedirects": "global",
+			"_type": "request"
+		},
+		{
+			"_id": "req_c2334072d9f5462d937c0ab53b5fb8d5",
+			"parentId": "fld_e1c5c44cd3434bac843c7c7df738993e",
+			"modified": 1651923354193,
+			"created": 1651907479022,
+			"url": "{{ _.URL }}/restaurants/my-third-awesome-restaurant/dishes/this-is-a-dish-without-allergens",
+			"name": "get one",
+			"description": "",
+			"method": "GET",
+			"body": {},
+			"parameters": [],
+			"headers": [],
+			"authentication": {},
+			"metaSortKey": -1651766611861,
+			"isPrivate": false,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingRebuildPath": true,
+			"settingFollowRedirects": "global",
+			"_type": "request"
+		},
+		{
+			"_id": "req_f2f379b97dae4d5894a5b8405b5a82dc",
+			"parentId": "fld_e1c5c44cd3434bac843c7c7df738993e",
+			"modified": 1651921754940,
+			"created": 1651907479018,
+			"url": "{{ _.URL }}/restaurants/mc-donalds/dishes",
+			"name": "restaurant dishes",
+			"description": "",
+			"method": "GET",
+			"body": {},
+			"parameters": [],
+			"headers": [],
+			"authentication": {},
+			"metaSortKey": -1651765763982,
+			"isPrivate": false,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingRebuildPath": true,
+			"settingFollowRedirects": "global",
+			"_type": "request"
+		},
+		{
+			"_id": "req_4200820781bc4e25ae74cc48dca5ba2b",
+			"parentId": "fld_e1c5c44cd3434bac843c7c7df738993e",
+			"modified": 1652022428042,
+			"created": 1651907479011,
+			"url": "{{ _.URL }}/restaurants/my-awesome-restaurant-ii/dishes",
+			"name": "create",
+			"description": "",
+			"method": "POST",
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"name\": \"Woopers VIANDAR\",\n\t\"price\": 15.55,\n\t\"menu_category_id\": \"14b23031-cbcb-4776-a25c-07c1f478e356\",\n\t\"allergens\": [\"011df0a5-5569-463a-a3bb-c16a9afff960\"]\n}"
 			},
 			"parameters": [],
 			"headers": [
@@ -220,7 +365,7 @@
 		{
 			"_id": "req_bda4485a0f5441a8a81b006e804a41a8",
 			"parentId": "fld_1897146fac4f4ea68d2a4f2274d2892c",
-			"modified": 1651774761682,
+			"modified": 1652022418350,
 			"created": 1651437235989,
 			"url": "{{ _.URL }}/auth/login",
 			"name": "login",
@@ -228,7 +373,7 @@
 			"method": "POST",
 			"body": {
 				"mimeType": "application/json",
-				"text": "{\n\t\"email\": \"santospierre1305@gmail.com\",\n\t\"password\": \"Test1234=\"\n}"
+				"text": "{\n\t\"email\": \"admin@admin.com\",\n\t\"password\": \"Test1234=\"\n}"
 			},
 			"parameters": [],
 			"headers": [
@@ -427,7 +572,7 @@
 		{
 			"_id": "req_fca265db5d55447f84d22f6b0c9800a5",
 			"parentId": "fld_5e1bd371511b4c5f8a2c22532a2d8b7a",
-			"modified": 1651769320385,
+			"modified": 1652022409406,
 			"created": 1651419123787,
 			"url": "{{ _.URL }}/users",
 			"name": "create",
@@ -435,7 +580,7 @@
 			"method": "POST",
 			"body": {
 				"mimeType": "application/json",
-				"text": "{\n\t\"name\": \"Zaza\",\n\t\"email\": \"zaza@gmail.com\",\n\t\"password\": \"Test1234=\"\n}"
+				"text": "{\n\t\"name\": \"Zaza\",\n\t\"email\": \"\",\n\t\"password\": \"Test\"\n}"
 			},
 			"parameters": [],
 			"headers": [
@@ -491,7 +636,7 @@
 		{
 			"_id": "env_bd931f36657e5bfcbc67330e75e96d742fca8c9f",
 			"parentId": "wrk_72ea9c8217bc419eb2c742ca2e77d158",
-			"modified": 1651519264723,
+			"modified": 1651926422864,
 			"created": 1651419111274,
 			"name": "Base Environment",
 			"data": { "URL": "localhost:3000/api/v1" },
@@ -504,21 +649,21 @@
 		{
 			"_id": "jar_bd931f36657e5bfcbc67330e75e96d742fca8c9f",
 			"parentId": "wrk_72ea9c8217bc419eb2c742ca2e77d158",
-			"modified": 1651774762845,
+			"modified": 1652022419944,
 			"created": 1651419111276,
 			"name": "Default Jar",
 			"cookies": [
 				{
 					"key": "nest-qr-restaurant",
-					"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0MTU4YzQ1YS0yYjdjLTRhZGYtYWI1Yi1jZmUwMDk4OGY5YzIiLCJlbWFpbCI6InNhbnRvc3BpZXJyZTEzMDVAZ21haWwuY29tIiwicm9sZSI6IlJFU1RBVVJBTlRfT1dORVIiLCJpc192ZXJmaWVkIjpmYWxzZSwiaWF0IjoxNjUxNzc0NzYyLCJleHAiOjE2NTQzNjY3NjJ9.URzoog8U9cikDYqvt_c2GPDxn1ULobLWTWQG89CzQH0",
-					"expires": "2022-06-04T18:19:22.000Z",
+					"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlZDQwNzlhMi02ZTQwLTQ1NTctODQ5ZC05ZGYwYWM2YzNjYmMiLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsInJvbGUiOiJSRVNUQVVSQU5UX09XTkVSIiwiaXNfdmVyZmllZCI6ZmFsc2UsImlhdCI6MTY1MjAyMjQxOSwiZXhwIjoxNjU0NjE0NDE5fQ.AeZcMN8U3w9H3XFhtBH5Dm56WUSc_8aqbnfS62khgYg",
+					"expires": "2022-06-07T15:06:59.000Z",
 					"maxAge": 2592000,
 					"domain": "localhost",
 					"path": "/",
 					"hostOnly": true,
 					"creation": "2022-05-05T15:52:19.511Z",
-					"lastAccessed": "2022-05-05T18:19:22.845Z",
-					"id": "011263547989577072"
+					"lastAccessed": "2022-05-08T15:06:59.942Z",
+					"id": "9238516014282581"
 				}
 			],
 			"_type": "cookie_jar"

@@ -1,4 +1,10 @@
-import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import {
+	HttpException,
+	HttpStatus,
+	Injectable,
+	NotFoundException,
+	UnprocessableEntityException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateRestaurantDto } from './dto/create-restaurant.dto';
@@ -22,7 +28,7 @@ export class RestaurantsService {
 			return newRestaurant;
 		} catch (error) {
 			if (error.code === '23505') {
-				throw new HttpException(error.detail, HttpStatus.UNPROCESSABLE_ENTITY);
+				throw new UnprocessableEntityException({ name: 'This restaurant name already exist' });
 			}
 		}
 	}
@@ -67,7 +73,7 @@ export class RestaurantsService {
 			return updatedRestaurant;
 		} catch (error) {
 			if (error.code === '23505') {
-				throw new HttpException(error.detail, HttpStatus.UNPROCESSABLE_ENTITY);
+				throw new UnprocessableEntityException({ name: 'This restaurant name already exist' });
 			}
 		}
 	}

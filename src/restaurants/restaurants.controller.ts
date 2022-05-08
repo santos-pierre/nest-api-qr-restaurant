@@ -8,7 +8,6 @@ import {
 	Delete,
 	UseGuards,
 	Req,
-	ValidationPipe,
 	UsePipes,
 	UseInterceptors,
 	ClassSerializerInterceptor,
@@ -22,6 +21,7 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { RequestWithUser } from 'src/users/interface/RequestWithUser';
 import { TransformInterceptor } from 'src/interceptors/transform.interceptor';
 import { OwnerResourceGuard } from 'src/guards/owner-resource.guard';
+import { CustomValidationPipe } from 'src/pipes/custom-validation.pipe';
 
 @Controller('restaurants')
 @UseInterceptors(TransformInterceptor, ClassSerializerInterceptor)
@@ -30,7 +30,7 @@ export class RestaurantsController {
 
 	@Post()
 	@UseGuards(JwtAuthGuard)
-	@UsePipes(new ValidationPipe({ transform: true }))
+	@UsePipes(new CustomValidationPipe({ transform: true }))
 	async create(@Req() req: RequestWithUser, @Body() createRestaurantDto: CreateRestaurantDto) {
 		return await this.restaurantsService.create(req.user, createRestaurantDto);
 	}
@@ -55,7 +55,7 @@ export class RestaurantsController {
 
 	@Patch(':slug')
 	@UseGuards(JwtAuthGuard, OwnerResourceGuard)
-	@UsePipes(new ValidationPipe({ transform: true }))
+	@UsePipes(new CustomValidationPipe({ transform: true }))
 	update(@Param('slug') slug: string, @Body() updateRestaurantDto: UpdateRestaurantDto) {
 		return this.restaurantsService.update(slug, updateRestaurantDto);
 	}
