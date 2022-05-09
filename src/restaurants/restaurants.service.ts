@@ -1,10 +1,4 @@
-import {
-	HttpException,
-	HttpStatus,
-	Injectable,
-	NotFoundException,
-	UnprocessableEntityException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateRestaurantDto } from './dto/create-restaurant.dto';
@@ -36,7 +30,7 @@ export class RestaurantsService {
 	async findAll(user_id: string): Promise<[Restaurant[], number]> {
 		return await this.restaurantsRepository.findAndCount({
 			where: { user_id: { id: user_id } },
-			relations: { user_id: true },
+			relations: { user_id: true, dishes: true },
 		});
 	}
 
