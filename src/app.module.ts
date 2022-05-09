@@ -17,6 +17,10 @@ import { MenuCategory } from './dishes/entities/menu-category.entity';
 import { Allergen } from './dishes/entities/allergens.entity';
 import { DishesModule } from './dishes/dishes.module';
 import { Dish } from './dishes/entities/dish.entity';
+import { AllergenModule } from './allergens/allergens.module';
+import { MenuCategoriesService } from './menu-categories/menu-categories.service';
+import { MenuCategoriesController } from './menu-categories/menu-categories.controller';
+import { MenuCategoriesModule } from './menu-categories/menu-categories.module';
 
 @Module({
 	imports: [
@@ -59,6 +63,8 @@ import { Dish } from './dishes/entities/dish.entity';
 		AuthModule,
 		RestaurantsModule,
 		DishesModule,
+		AllergenModule,
+		MenuCategoriesModule,
 	],
 	controllers: [AppController],
 	providers: [AppService, MailerService],
