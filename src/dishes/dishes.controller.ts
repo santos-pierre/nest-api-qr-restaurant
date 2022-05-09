@@ -9,7 +9,6 @@ import {
 	UseInterceptors,
 	ClassSerializerInterceptor,
 	UsePipes,
-	ValidationPipe,
 	UseGuards,
 	Req,
 	NotFoundException,
@@ -18,10 +17,12 @@ import {
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { OwnerDishGuard } from 'src/guards/owner-dishes.guard';
 import { TransformInterceptor } from 'src/interceptors/transform.interceptor';
+import { CustomValidationPipe } from 'src/pipes/custom-validation.pipe';
 import { RestaurantsService } from 'src/restaurants/restaurants.service';
 import { RequestWithUser } from 'src/users/interface/RequestWithUser';
 import { DishesService } from './dishes.service';
 import { CreateDishDto } from './dto/create-dish.dto';
+import { DishRestaurantParam } from './dto/dish-restaurant-param.dto';
 import { UpdateDishDto } from './dto/update-dish.dto';
 
 @Controller('restaurants/:restaurant_id/dishes')
@@ -34,11 +35,11 @@ export class DishesController {
 
 	@Post()
 	@UseGuards(JwtAuthGuard, OwnerDishGuard)
-	@UsePipes(new ValidationPipe({ transform: true }))
+	@UsePipes(new CustomValidationPipe({ transform: true }))
 	async create(
 		@Req() req: RequestWithUser,
 		@Body() createDishDto: CreateDishDto,
-		@Param('restaurant_id') restaurant_id: string,
+		@Param() { restaurant_id }: DishRestaurantParam,
 	) {
 		const restaurant = await this.restaurantsService.findOneByUser(restaurant_id, req.user.id);
 
@@ -85,6 +86,7 @@ export class DishesController {
 
 	@Patch(':slug')
 	@UseGuards(JwtAuthGuard, OwnerDishGuard)
+	@UsePipes(new CustomValidationPipe({ transform: true }))
 	@HttpCode(204)
 	async update(
 		@Req() req: RequestWithUser,

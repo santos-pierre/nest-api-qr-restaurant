@@ -1,4 +1,5 @@
 import { Dish } from 'src/dishes/entities/dish.entity';
+import { MenuCategory } from 'src/dishes/entities/menu-category.entity';
 import { User } from 'src/users/entities/user.entity';
 import {
 	Column,

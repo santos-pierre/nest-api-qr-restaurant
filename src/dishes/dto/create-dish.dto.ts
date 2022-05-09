@@ -20,5 +20,5 @@ export class CreateDishDto {
 	menu_category_id: string;
 
 	@IsString({ each: true })
-	allergens: string[] = [];
+	allergens: string[];
 }

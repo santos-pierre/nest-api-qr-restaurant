@@ -6,5 +6,5 @@ VALUES
     ('dessert','dessert'),
     ('side dishes', 'side dishes'),
     ('drinks', 'drinks'),
-    ('cocktails', 'cocktials'),
+    ('cocktails', 'cocktails'),
     ('spirits', 'spirits');

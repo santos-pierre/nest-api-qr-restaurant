@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { InjectConnection, InjectRepository } from '@nestjs/typeorm';
 import { plainToInstance } from 'class-transformer';
 import slugify from 'slugify';
@@ -44,7 +44,12 @@ export class DishesService {
 			return dishCreated;
 		} catch (error) {
 			await queryRunner.rollbackTransaction();
-			throw new HttpException(error, HttpStatus.UNPROCESSABLE_ENTITY);
+			if (error.code === '23505') {
+				throw new UnprocessableEntityException({
+					status: HttpStatus.UNPROCESSABLE_ENTITY,
+					errors: { name: ['This Dish name already exist'] },
+				});
+			}
 		} finally {
 			await queryRunner.release();
 		}
@@ -93,7 +98,9 @@ export class DishesService {
 			return updatedDish;
 		} catch (error) {
 			await queryRunner.rollbackTransaction();
-			throw new HttpException(error, HttpStatus.UNPROCESSABLE_ENTITY);
+			if (error.code === '23505') {
+				throw new UnprocessableEntityException({ name: 'This Dish name already exist' });
+			}
 		} finally {
 			await queryRunner.release();
 		}
